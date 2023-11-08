@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Enums;
 
-enum ExampleEnum: int
+enum OrderStatusesEnum: int
 {
     case PAID = 1;
     case VOID = 2;

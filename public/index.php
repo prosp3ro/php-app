@@ -5,6 +5,8 @@ declare(strict_types=1);
 use App\App;
 use App\Container;
 use App\Controllers\HomeController;
+use App\Enums\OrderStatusesEnum;
+use App\ReadOnlyPropertyExample;
 use App\Router;
 use Dotenv\Dotenv;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -84,7 +86,7 @@ $router = new Router($container);
 $router
     ->get("/", [HomeController::class, "index"]);
 
-// (new ExampleForEnumTests)->asd(ExampleEnum::PAID);
+(new HomeController)->order(OrderStatusesEnum::PAID);
 // dd((new ReadOnlyPropertyExample("street", "city", "state", "123", "country"))->street);
 
 (new App($router, [
