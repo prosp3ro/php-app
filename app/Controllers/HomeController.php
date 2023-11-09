@@ -20,4 +20,20 @@ class HomeController
         dump($enum->name);
         dump($enum->value);
     }
+
+    public function arrayUnpacking()
+    {
+        $arr1 = [
+            "a" => "b",
+            "b" => "c"
+        ];
+
+        $arr2 = [
+            "c" => "d",
+            "d" => "e"
+        ];
+
+        dump(array($arr1, $arr2));
+        dump(array(...$arr1, ...$arr2));
+    }
 }

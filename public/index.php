@@ -84,9 +84,10 @@ $container = new Container();
 $router = new Router($container);
 
 $router
-    ->get("/", [HomeController::class, "index"]);
+    ->get("/", [HomeController::class, "index"])
+    ->get("/arr", [HomeController::class, "arrayUnpacking"]);
 
-(new HomeController)->order(OrderStatusesEnum::PAID);
+// (new HomeController)->order(OrderStatusesEnum::PAID);
 // dd((new ReadOnlyPropertyExample("street", "city", "state", "123", "country"))->street);
 
 (new App($router, [
