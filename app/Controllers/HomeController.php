@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Enums\OrderStatusesEnum;
+use AttributesRouter\Attribute\Route;
 
 class HomeController
 {
+    #[Route('/', name: 'index', methods: ['GET'])]
     public function index()
     {
         dd("test");
@@ -21,6 +23,7 @@ class HomeController
         dump($enum->value);
     }
 
+    #[Route('/arr', 'GET')]
     public function arrayUnpacking()
     {
         $arr1 = [

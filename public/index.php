@@ -2,12 +2,8 @@
 
 declare(strict_types=1);
 
-use App\App;
-use App\Container;
 use App\Controllers\HomeController;
-use App\Enums\OrderStatusesEnum;
-use App\ReadOnlyPropertyExample;
-use App\Router;
+use AttributesRouter\Router;
 use Dotenv\Dotenv;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -80,17 +76,18 @@ $capsule->addConnection(
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-$container = new Container();
-$router = new Router($container);
-
-$router
-    ->get("/", [HomeController::class, "index"])
-    ->get("/arr", [HomeController::class, "arrayUnpacking"]);
-
 // (new HomeController)->order(OrderStatusesEnum::PAID);
 // dd((new ReadOnlyPropertyExample("street", "city", "state", "123", "country"))->street);
 
-(new App($router, [
-    'uri' => $_SERVER["REQUEST_URI"],
-    'method' => $_SERVER["REQUEST_METHOD"]
-]))->run();
+$router = new Router(
+    [
+        HomeController::class
+    ]
+);
+
+// If there is a match, it will return the class and method associated
+// to the request as well as route parameters
+if ($match = $router->match()) {
+    $controller = new $match['class']();
+    $controller->{$match['method']}($match['params']);
+}

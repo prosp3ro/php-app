@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd58311a42fd5d65c90aeca917108263",
+    "content-hash": "8713149e95be99de5ff9ee7b8b20cfb7",
     "packages": [
         {
             "name": "brick/math",
@@ -151,6 +151,50 @@
                 }
             ],
             "time": "2023-06-16T13:40:37+00:00"
+        },
+        {
+            "name": "eredost/attributes-router",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Eredost/attributes-router.git",
+                "reference": "3ed6ff8d0a989efaa4868f6173c785ff91f6db17"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Eredost/attributes-router/zipball/3ed6ff8d0a989efaa4868f6173c785ff91f6db17",
+                "reference": "3ed6ff8d0a989efaa4868f6173c785ff91f6db17",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "AttributesRouter\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "AttributesRouter\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "description": "Simple router that uses the attributes of PHP",
+            "keywords": [
+                "router"
+            ],
+            "support": {
+                "source": "https://github.com/Eredost/attributes-router/tree/1.0.2",
+                "issues": "https://github.com/Eredost/attributes-router/issues"
+            },
+            "time": "2022-10-03T19:10:30+00:00"
         },
         {
             "name": "graham-campbell/result-type",
