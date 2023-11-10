@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Controllers\HomeController;
+use App\Controllers\UserController;
 use App\Enums\OrderStatusesEnum;
 use AttributesRouter\Router;
 use Dotenv\Dotenv;
@@ -70,13 +71,14 @@ $capsule->bootEloquent();
 
 // $container = new DI\Container();
 
-(new HomeController)->order(OrderStatusesEnum::PAID);
-die();
+// (new HomeController)->order(OrderStatusesEnum::PAID);
+// die();
 // dd((new ReadOnlyPropertyExample("street", "city", "state", "123", "country"))->street);
 
 $router = new Router(
     [
-        HomeController::class
+        HomeController::class,
+        UserController::class
     ]
 );
 
