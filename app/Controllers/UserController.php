@@ -25,14 +25,24 @@ class UserController
         $email = "user@example.com";
         $password = "password";
 
+        $html = <<<HTMLBody
+            <h1 style="text-align: center">Welcome</h1>
+            <br />
+            Thank you for signing up
+        HTMLBody;
+
+        // email client might not support html
+        $text = "Welcome. Thank you for signing up";
+
         $emailObj = (new Email())
             ->from('support@example.com')
             ->to($email)
             ->subject("Welcome")
-            ->text("Thank you for signing up");
+            ->attach("asd", "attachment.txt")
+            ->text($text)
+            ->html($html);
 
-        $dsn = "smtp://localhost:1025";
-        $transport = Transport::fromDsn($dsn);
+        $transport = Transport::fromDsn($_ENV["MAILER_DSN"]);
 
         $mailer = new Mailer($transport);
         $mailer->send($emailObj);
