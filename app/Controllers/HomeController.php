@@ -18,7 +18,7 @@ class HomeController
     public function order(OrderStatusesEnum $enum)
     {
         dump($enum);
-        dump($enum->text());
+        dump($enum->toString());
         dump($enum->name);
         dump($enum->value);
     }
