@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Controllers\HomeController;
+use App\Enums\OrderStatusesEnum;
 use AttributesRouter\Router;
 use Dotenv\Dotenv;
 use Illuminate\Database\Capsule\Manager as Capsule;
@@ -28,15 +29,6 @@ include_once ROOT . "/utils/debug.php";
 
 set_exception_handler(
     function (Throwable $exception) {
-        $exceptionClassName = get_class($exception);
-        $errorLogMessage = date('Y-m-d H:i:s') . PHP_EOL .
-            "Exception: {$exceptionClassName}" . PHP_EOL .
-            "Message: {$exception->getMessage()}" . PHP_EOL .
-            "File: {$exception->getFile()}" . PHP_EOL .
-            "Line: {$exception->getLine()}" . PHP_EOL . PHP_EOL;
-
-        error_log($errorLogMessage, 3, ROOT . "/logs/error.log");
-
         if (is_callable("showException")) {
             showException($exception);
         }
@@ -76,7 +68,10 @@ $capsule->addConnection(
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
 
-// (new HomeController)->order(OrderStatusesEnum::PAID);
+// $container = new DI\Container();
+
+(new HomeController)->order(OrderStatusesEnum::PAID);
+die();
 // dd((new ReadOnlyPropertyExample("street", "city", "state", "123", "country"))->street);
 
 $router = new Router(
