@@ -2,10 +2,6 @@
 
 declare(strict_types=1);
 
-use App\Controllers\HomeController;
-use App\Controllers\UserController;
-use App\Enums\OrderStatusesEnum;
-use AttributesRouter\Router;
 use Doctrine\DBAL\DriverManager;
 use Dotenv\Dotenv;
 
@@ -36,27 +32,6 @@ set_exception_handler(
     }
 );
 
-ini_set('session.use_only_cookies', 1);
-ini_set('session.use_strict_mode', 1);
-
-session_set_cookie_params(
-    [
-        "lifetime" => 86400 * 7,
-        "domain" => "127.0.0.3",
-        "path" => "/",
-        "secure" => true,
-        "httponly" => true
-    ]
-);
-
-session_start();
-
-// $container = new DI\Container();
-
-// (new HomeController)->order(OrderStatusesEnum::PAID);
-// die();
-// dd((new ReadOnlyPropertyExample("street", "city", "state", "123", "country"))->street);
-
 $doctrineConnectionParams = [
     'dbname' => $_ENV["DB_SCHEMA"],
     'user' => $_ENV["DB_USERNAME"],
@@ -67,16 +42,17 @@ $doctrineConnectionParams = [
 
 $doctrineConnection = DriverManager::getConnection($doctrineConnectionParams);
 
-$router = new Router(
-    [
-        HomeController::class,
-        UserController::class
-    ]
-);
+$queryBuilder = $doctrineConnection->createQueryBuilder();
 
-// If there is a match, it will return the class and method associated
-// to the request as well as route parameters
-if ($match = $router->match()) {
-    $controller = new $match['class']();
-    $controller->{$match['method']}($match['params']);
-}
+$result = $queryBuilder->select("*")->from("test")->executeQuery()->fetchAllAssociative();
+
+// $query = $queryBuilder
+//     ->select('id', 'email', 'password')
+//     ->from('User', 'u')
+//     ->where('email = :email')
+//     ->setParameter('email', $email)
+//     ->getQuery();
+
+// $result = $query->getOneOrNullResult();
+
+dd($result);
