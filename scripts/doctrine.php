@@ -55,4 +55,8 @@ $result = $queryBuilder->select("*")->from("test")->executeQuery()->fetchAllAsso
 
 // $result = $query->getOneOrNullResult();
 
-dd($result);
+$schema = $doctrineConnection->createSchemaManager();
+
+// var_dump($result);
+
+var_dump($schema->listTableColumns("emails"));
