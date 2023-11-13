@@ -6,6 +6,7 @@ use App\Controllers\HomeController;
 use App\Controllers\UserController;
 use App\Enums\OrderStatusesEnum;
 use AttributesRouter\Router;
+use Doctrine\DBAL\DriverManager;
 use Dotenv\Dotenv;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
@@ -51,29 +52,54 @@ session_set_cookie_params(
 
 session_start();
 
-$capsule = new Capsule();
+// $capsule = new Capsule();
 
-$capsule->addConnection(
-    [
-        "driver" => $_ENV["DB_DRIVER"] ?? "mysql",
-        "host" => $_ENV["DB_HOST"],
-        "database" => $_ENV["DB_SCHEMA"],
-        "username" => $_ENV["DB_USERNAME"],
-        "password" => $_ENV["DB_PASSWORD"],
-        "charset" => "utf8",
-        "collation" => "utf8_unicode_ci",
-        "prefix" => ""
-    ]
-);
+// $capsule->addConnection(
+//     [
+//         "driver" => $_ENV["DB_DRIVER"] ?? "mysql",
+//         "host" => $_ENV["DB_HOST"],
+//         "database" => $_ENV["DB_SCHEMA"],
+//         "username" => $_ENV["DB_USERNAME"],
+//         "password" => $_ENV["DB_PASSWORD"],
+//         "charset" => "utf8",
+//         "collation" => "utf8_unicode_ci",
+//         "prefix" => ""
+//     ]
+// );
 
-$capsule->setAsGlobal();
-$capsule->bootEloquent();
+// $capsule->setAsGlobal();
+// $capsule->bootEloquent();
 
 // $container = new DI\Container();
 
 // (new HomeController)->order(OrderStatusesEnum::PAID);
 // die();
 // dd((new ReadOnlyPropertyExample("street", "city", "state", "123", "country"))->street);
+
+$doctrineConnectionParams = [
+    'dbname' => $_ENV["DB_SCHEMA"],
+    'user' => $_ENV["DB_USERNAME"],
+    'password' => $_ENV["DB_PASSWORD"],
+    'host' => $_ENV["DB_HOST"],
+    'driver' => $_ENV["DB_DRIVER"] ?? 'pdo_mysql'
+];
+
+$doctrineConnection = DriverManager::getConnection($doctrineConnectionParams);
+
+$queryBuilder = $doctrineConnection->createQueryBuilder();
+
+$result = $queryBuilder->select("*")->from("test")->executeQuery()->fetchAllAssociative();
+
+// $query = $queryBuilder
+//     ->select('id', 'email', 'password')
+//     ->from('User', 'u')
+//     ->where('email = :email')
+//     ->setParameter('email', $email)
+//     ->getQuery();
+
+// $result = $query->getOneOrNullResult();
+
+dd($result);
 
 $router = new Router(
     [
