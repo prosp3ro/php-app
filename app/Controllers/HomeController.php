@@ -9,7 +9,7 @@ use AttributesRouter\Attribute\Route;
 
 class HomeController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route(path: '/', methods: ['GET'])]
     public function index()
     {
         dd("test");
@@ -23,7 +23,7 @@ class HomeController
         dump($enum->value);
     }
 
-    #[Route('/arr', 'GET')]
+    #[Route(path: '/arr', methods: ['GET'])]
     public function arrayUnpacking()
     {
         $arr1 = [

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\View;
 use AttributesRouter\Attribute\Route;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\Transport;
@@ -18,8 +19,8 @@ class UserController
     //     dd("register");
     // }
 
-    #[Route('/register', 'GET')]
-    public function register()
+    #[Route(path: '/mail', name: "mail", methods: ['GET'])]
+    public function mail()
     {
         $username = "user";
         $email = "user@example.com";
@@ -46,5 +47,17 @@ class UserController
 
         $mailer = new Mailer($transport);
         $mailer->send($emailObj);
+    }
+
+    #[Route(path: '/register', name: "register", methods: ['GET'])]
+    public function register()
+    {
+        View::create("register")->render();
+    }
+
+    #[Route(path: '/register', name: "store", methods: ['POST'])]
+    public function store()
+    {
+        dd($_POST);
     }
 }
