@@ -10,6 +10,6 @@ class Test extends Model
 {
     public function selectQueryTest()
     {
-        return $this->queryBuilder->select("*")->from("test")->fetchAllAssociative();
+        return $this->queryBuilder->select("*")->from("test");
     }
 }
