@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 use App\Enums\OrderStatusesEnum;
+use App\Models\Test;
 use AttributesRouter\Attribute\Route;
 
 class HomeController
@@ -12,7 +13,9 @@ class HomeController
     #[Route(path: '/', methods: ['GET'])]
     public function index()
     {
-        dd("test");
+        $testModel = new Test();
+
+        dd($testModel->selectQueryTest());
     }
 
     public function order(OrderStatusesEnum $enum)
