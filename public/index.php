@@ -2,11 +2,8 @@
 
 declare(strict_types=1);
 
-use App\Controllers\HomeController;
-use App\Controllers\UserController;
-use App\Enums\OrderStatusesEnum;
+use App\App;
 use AttributesRouter\Router;
-use Doctrine\DBAL\DriverManager;
 use Dotenv\Dotenv;
 
 define('ROOT', dirname(__DIR__));
@@ -51,32 +48,10 @@ session_set_cookie_params(
 
 session_start();
 
-// $container = new DI\Container();
-
 // (new HomeController)->order(OrderStatusesEnum::PAID);
-// die();
 // dd((new ReadOnlyPropertyExample("street", "city", "state", "123", "country"))->street);
 
-$doctrineConnectionParams = [
-    'dbname' => $_ENV["DB_SCHEMA"],
-    'user' => $_ENV["DB_USERNAME"],
-    'password' => $_ENV["DB_PASSWORD"],
-    'host' => $_ENV["DB_HOST"],
-    'driver' => $_ENV["DB_DRIVER"] ?? 'pdo_mysql'
-];
+$container = new DI\Container();
+$router = new Router();
 
-$doctrineConnection = DriverManager::getConnection($doctrineConnectionParams);
-
-$router = new Router(
-    [
-        HomeController::class,
-        UserController::class
-    ]
-);
-
-// If there is a match, it will return the class and method associated
-// to the request as well as route parameters
-if ($match = $router->match()) {
-    $controller = new $match['class']();
-    $controller->{$match['method']}($match['params']);
-}
+(new App($container, $router))->boot()->run();
