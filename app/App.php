@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Controllers\HomeController;
+use App\Controllers\UserController;
 use AttributesRouter\Router;
 use DI\Container;
 
